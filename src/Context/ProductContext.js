@@ -5,8 +5,8 @@ const ProductContext = createContext()
 
 export const ProductProvider = ({ children }) => {
   const [productList, setProductList] = useState([])
-  const [categories, setCategories] = useState()
-  const [category, setCategory] = useState("/products")
+  const [categories, setCategories] = useState("")
+  const [category, setCategory] = useState("")
   const [productID, setProductID] = useState("")
   const [product, setProduct] = useState({})
   const [loading, setLoading] = useState(false)
@@ -34,7 +34,7 @@ export const ProductProvider = ({ children }) => {
       
       if (category && category.length > 0) {
         await axios.get(
-          `https://fakestoreapi.com/products/category/${category}`
+          `https://fakestoreapi.com/products/category${category}`
         ).then((res) => {
           setProductList(res.data)
           setLoading(false)

@@ -20,6 +20,36 @@ const FavoriteProvider = ({children}) => {
    * 11. Create a variable called values that will hold an object with the favoriteItems, setFavoriteItems, addToFavorite, and removeFromFavorite functions
    * 12. Return the FavoriteContext.Provider and pass in the values variable
    */
+  
+  const [favoriteItems, setFavoriteItems] = useState(defaultFavorite);
+
+  useEffect(() => {  
+    localStorage.setItem('favorite', JSON.stringify(favoriteItems));
+  }, [favoriteItems]);
+
+  const addToFavorite = (data, findFavoriteItem) => {
+    if(!findFavoriteItem){
+      return setFavoriteItems([data,...favoriteItems]);
+    } else {
+      const filtered = favoriteItems.filter((item) => {
+        return item.id !==findFavoriteItem.id;
+      });
+      return setFavoriteItems(filtered);
+    }
+  }
+
+  const removeFromFavorite = (item_id) => {
+    const filtered = favoriteItems.filter((elem) => {
+      return elem.id !== item_id;
+    })
+    return setFavoriteItems(filtered);
+  }
+
+  const values = {
+    favoriteItems, setFavoriteItems, addToFavorite, removeFromFavorite
+  }
+
+  return <FavoriteContext.Provider value= {values}>{children}</FavoriteContext.Provider>
 
 }
 
